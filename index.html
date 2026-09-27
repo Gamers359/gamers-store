@@ -28,7 +28,7 @@
     .top-icons { display: flex; gap: 18px; align-items: center; }
     .top-icons i { color: var(--primary); font-size: 1.3rem; cursor: pointer; }
     
-    .cart-wrapper { position: relative; }
+    .cart-wrapper { position: relative; cursor: pointer; }
     .cart-badge { position: absolute; top: -6px; right: -8px; background: #ef4444; color: white; font-size: 0.65rem; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
     .hero-banner { text-align: center; padding: 25px 15px; border-bottom: 1px solid var(--card-border); background: #0c101c; }
@@ -75,30 +75,10 @@
     .pack-row { display: flex; justify-content: space-between; align-items: center; background: #090c14; border: 1px solid var(--card-border); padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; }
     .pack-row:hover { border-color: var(--primary); }
 
-    .qr-container { background: #fff; padding: 10px; border-radius: 12px; display: inline-block; margin: 10px 0; box-shadow: 0 0 20px rgba(204, 230, 0, 0.2); }
+    .qr-container { background: #fff; padding: 10px; border-radius: 12px; display: inline-block; margin: 10px 0; }
     .qr-container img { width: 210px; height: 210px; object-fit: contain; display: block; }
     .upi-badge { background: #090c14; border: 1px dashed var(--primary); padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; color: var(--primary); margin-bottom: 10px; display: inline-block; }
   </style>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDfYCV0K10gZktVLJ0c7Tq7Xl60Opp2Zfg",
-      authDomain: "gamers-c0592.firebaseapp.com",
-      projectId: "gamers-c0592",
-      storageBucket: "gamers-c0592.firebasestorage.app",
-      messagingSenderId: "869851985313",
-      appId: "1:869851985313:web:68dd5d4ce7dfc283e247e0"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    window.db = getFirestore(app);
-    window.addDoc = addDoc;
-    window.collection = collection;
-    window.serverTimestamp = serverTimestamp;
-  </script>
 </head>
 <body>
 
@@ -252,7 +232,6 @@
       <div class="upi-badge">UPI ID: <strong>bgmiitoo@fam</strong></div>
       
       <div class="qr-container">
-        <!-- FamPay Scanner Image / Auto Dynamic QR -->
         <img id="upiQrCodeImg" src="qr.jpg" onerror="fallbackQR(this)" alt="UPI QR Code" />
       </div>
 
@@ -271,7 +250,7 @@
         <input type="text" id="utrNumberInp" placeholder="Enter UTR Reference No." />
       </div>
 
-      <button id="submitPayBtn" class="btn-action" style="border-color: #22c55e; color: #22c55e; padding: 12px;" onclick="submitOrderConfirmation()">Confirm & Submit Order</button>
+      <button id="submitPayBtn" class="btn-action" style="border-color: #22c55e; color: #22c55e; padding: 12px;" onclick="submitOrderConfirmation()">Confirm & Send Order</button>
     </div>
   </div>
 
@@ -340,4 +319,27 @@
   </div>
 
   <script>
-  
+    let cart = [];
+    const UPI_ID = "bgmiitoo@fam";
+    const OWNER_PHONE = "916201143946"; 
+    let pendingOrder = null;
+
+    function getSavedUser() {
+      try {
+        return JSON.parse(localStorage.getItem('gamer_profile')) || null;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    function syncProfileUI() {
+      const u = getSavedUser();
+      if(u && u.name) {
+        document.getElementById('userGreeting').innerText = `Welcome, ${u.name}!`;
+        document.getElementById('navUserLabel').innerText = u.name.split(' ')[0];
+        document.getElementById('dispName').innerText = u.name;
+        document.getElementById('avatarInitial').innerText = u.name.charAt(0).toUpperCase();
+        document.getElementById('dispPhone').innerText = u.phone || '-';
+        document.getElementById('dispAddress').innerText = u.address || '-';
+      } else {
+        docum
