@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAmËRs - Official Gaming Store</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #ff0055;
+      --primary-glow: rgba(255, 0, 85, 0.45);
+      --accent: #00f0ff;
+      --bg-dark: #0a0d16;
+      --card-bg: #131826;
+      --card-border: #1e263d;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --green: #22c55e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 50px; }
+
+    header {
+      background: linear-gradient(180deg, #161e33 0%, var(--bg-dark) 100%);
+      border-bottom: 1px solid var(--card-border);
+      padding: 18px 15px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .brand-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 0 12px var(--primary), 0 0 25px var(--primary-glow);
+    }
+    .brand-logo span { color: var(--accent); text-shadow: 0 0 14px var(--accent); }
+    .tagline { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1.2px; text-transform: uppercase; margin-top: 3px; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
+
+    .container { max-width: 1000px; margin: 25px auto 0; padding: 0 15px; }
+    .section-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; margin-bottom: 18px; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .section-title i { color: var(--primary); }
+
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 360px)); gap: 25px; justify-content: center; }
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badge-deal {
+      position: absolute; top: 12px; left: 12px;
+      background: linear-gradient(135deg, #ff0055, #d90429);
+      color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700;
+      font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; z-index: 5;
+    }
+
+    .gallery-container {
+      background: radial-gradient(circle at center, #1b243b 0%, #0d1220 100%);
+      width: 100%;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .main-img-box {
+      width: 100%;
+      height: 230px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .main-img-box img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.7));
+    }
+
+    .mouse-vector-art {
+      width: 170px;
+      height: 220px;
+      display: none;
+      filter: drop-shadow(0 0 15px rgba(255, 0, 85, 0.5));
+    }
+
+    .card-content { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .item-category { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+    .item-title { font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 10px; line-height: 1.35; }
+
+    .rating-row { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-size: 0.82rem; color: var(--text-muted); }
+    .stars { color: #f59e0b; }
+
+    .price-container { background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 14px; margin-bottom: 15px; }
+    .price-main { display: flex; align-items: baseline; gap: 10px; }
+    .current-price { font-family: 'Rajdhani', sans-serif; font-size: 1.9rem; font-weight: 700; color: var(--green); line-height: 1; }
+    .mrp-price { font-size: 0.92rem; text-decoration: line-through; color: var(--text-muted); }
+    .discount-tag { background: rgba(34,197,94,0.15); color: var(--green); font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+
+    .details-list { list-style: none; margin-bottom: 18px; flex: 1; }
+    .details-list li { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 9px; display: flex; align-items: center; gap: 10px; }
+    .details-list li i { color: var(--accent); font-size: 0.85rem; width: 16px; text-align: center; }
+
+    .btn-order {
+      background: linear-gradient(135deg, var(--primary) 0%, #d90429 100%);
+      color: #fff; border: none; width: 100%; padding: 13px; border-radius: 10px;
+      font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 4px 15px rgba(255, 0, 85, 0.35); transition: 0.2s;
+    }
+    .btn-order:hover { filter: brightness(1.15); transform: scale(1.02); }
+
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(5,7,13,0.85); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 1000; padding: 15px; }
+    .modal-box { background: #141a2b; border: 1px solid var(--card-border); border-radius: 14px; width: 100%; max-width: 440px; padding: 22px; max-height: 90vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
+    .modal-header h3 { font-size: 1.1rem; color: #fff; }
+    .close-icon { color: var(--text-muted); font-size: 1.3rem; cursor: pointer; }
+
+    .timer-banner { background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 8px; padding: 8px 12px; text-align: center; margin-bottom: 14px; color: #f87171; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: center; align-items: center; gap: 6px; }
+
+    .upi-buttons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .upi-app-btn { background: #0a0d17; border: 1px solid var(--card-border); padding: 9px 5px; border-radius: 8px; text-align: center; color: #fff; font-size: 0.78rem; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; }
+    .upi-app-btn:hover { border-color: var(--accent); background: #19233a; }
+
+    .upi-manual-box { background: #0d1220; border: 1px dashed var(--accent); border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 14px; }
+    .upi-manual-box p { font-size: 0.78rem; color: var(--text-muted); }
+    .upi-val { font-size: 1rem; font-weight: 700; color: var(--accent); margin: 3px 0; user-select: all; }
+
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
+    input, textarea { width: 100%; background: #0a0d17; border: 1px solid var(--card-border); color: #fff; padding: 9px 11px; border-radius: 8px; font-size: 0.85rem; outline: none; }
+    input:focus, textarea:focus { border-color: var(--accent); }
+
+    .success-overlay { display: none; position: fixed; inset: 0; background: rgba(5,7,13,0.92); z-index: 2000; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+    .success-card { background: #141a2b; border: 1px solid var(--green); padding: 30px 25px; border-radius: 18px; max-width: 380px; width: 100%; box-shadow: 0 0 35px rgba(34,197,94,0.3); }
+    .success-icon-box { width: 75px; height: 75px; background: rgba(34,197,94,0.15); color: var(--green); font-size: 2.2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 2px solid var(--green); }
+    .success-card h2 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+    .success-card p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDfYCV0K10gZktVLJ0c7Tq7Xl60Opp2Zfg",
+      authDomain: "gamers-c0592.firebaseapp.com",
+      projectId: "gamers-c0592",
+      storageBucket: "gamers-c0592.firebasestorage.app",
+      messagingSenderId: "869851985313",
+      appId: "1:869851985313:web:68dd5d4ce7dfc283e247e0",
+      measurementId: "0-B1I93LTDON"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let activeItem = "GEONIX Vigor R7 Wired Gaming Mouse";
+    let activePrice = 299;
+    let timerInterval = null;
+
+    window.handleImgError = () => {
+      document.getElementById('mainProductImg').style.display = "none";
+      document.getElementById('vectorMouse').style.display = "block";
+    };
+
+    window.openOrderModal = (name, price) => {
+      activeItem = name;
+      activePrice = price;
+      document.getElementById('itemModalTitle').innerText = name;
+      document.getElementById('itemModalPrice').innerText = `Payable: ₹${price}`;
+      document.getElementById('checkoutModal').style.display = 'flex';
+      startCountdown(10 * 60);
+    };
+
+    window.closeOrderModal = () => {
+      document.getElementById('checkoutModal').style.display = 'none';
+      if(timerInterval) clearInterval(timerInterval);
+    };
+
+    function startCountdown(duration) {
+      let timer = duration, minutes, seconds;
+      const display = document.getElementById('timerDisplay');
+      if(timerInterval) clearInterval(timerInterval);
+
+      timerInterval = setInterval(() => {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = `${minutes}:${seconds}`;
+
+        if (--timer < 0) {
+          clearInterval(timerInterval);
+          display.textContent = "Time Expired";
+        }
+      }, 1000);
+    }
+
+    window.payViaApp = (appName) => {
+      const upiId = "6201143946@axl";
+      const name = "GAmERs Store";
+      const amt = activePrice;
+      let url = "";
+
+      if(appName === 'gpay') {
+        url = `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
+      } else if(appName === 'phonepe') {
+        url = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
+      } else if(appName === 'paytm') {
+        url = `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
+      } else {
+        url = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
+      }
+
+      window.location.href = url;
+    };
+
+    window.handleOrderSubmit = async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('orderSubmitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting...';
+
+      const custName = document.getElementById('cName').value;
+      const custPhone = document.getElementById('cPhone').value;
+      const custAddress = document.getElementById('cAddress').value;
+      const custUTR = document.getElementById('cUTR').value;
+
+      try {
+        await addDoc(collection(db, "orders"), {
+          item: activeItem,
+          price: activePrice,
+          customerName: custName,
+          phoneOrControl: custPhone,
+          address: custAddress,
+          utrNumber: custUTR,
+          status: "Order Received",
+          orderDate: serverTimestamp()
+        });
+
+        closeOrderModal();
+        document.getElementById('orderForm').reset();
+        document.getElementById('successOverlay').style.display = 'flex';
+      } catch (err) {
+        alert("Firestore Error! Kripya Firestore Database connect karein.");
+        console.error(err);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Confirm & Submit Order';
+      }
+    };
+
+    window.closeSuccess = () => {
+      document.getElementById('successOverlay').style.display = 'none';
+    };
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="brand-logo">GAm<span>ËRs</span></div>
+    <div class="tagline">Official Gaming Gears & Reselling Hub</div>
+  </header>
+
+  <main class="container">
+    <div class="section-title">
+      <i class="fa-solid fa-fire"></i> Featured Gaming Deals
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <span class="badge-deal">50% OFF</span>
+        
+        <div class="gallery-container">
+          <div class="main-img-box">
+            <img id="mainProductImg" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=600&q=80" onerror="handleImgError()" alt="GEONIX Vigor R7 Gaming Mouse" />
+            
+            <svg id="vectorMouse" class="mouse-vector-art" viewBox="0 0 100 130">
+              <path d="M 50 5 C 25 5 15 35 15 70 C 15 105 30 125 50 125 C 70 125 85 105 85 70 C 85 35 75 5 50 5 Z" fill="#151b2b" stroke="#ff0055" stroke-width="2"/>
+              <path d="M 50 8 L 50 50" stroke="#ff0055" stroke-width="2"/>
+              <rect x="47" y="20" width="6" height="15" rx="3" fill="#00f0ff"/>
+              <path d="M 28 35 Q 38 60 28 85" stroke="#ff0055" stroke-width="2.5" fill="none"/>
+              <path d="M 72 35 Q 62 60 72 85" stroke="#ff0055" stroke-width="2.5" fill="none"/>
+              <text x="50" y="105" text-anchor="middle" fill="#00f0ff" font-size="7" font-family="'Orbitron', sans-serif">GEONIX R7</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="item-category">Gaming Peripherals</div>
+          <h2 class="item-title">GEONIX Vigor R7 Wired Gaming Mouse</h2>
+
+          <div class="rating-row">
+            <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span>
+            <span>4.3 (1,240+ Reviews)</span>
+          </div>
+
+          <div class="price-container">
+            <div class="price-main">
+              <span class="current-price">₹299</span>
+              <span class="mrp-price">M.R.P: ₹599</span>
+              <span class="discount-tag">Save ₹300</span>
+            </div>
+          </div>
+
+          <!-- YAHAN SE SABHI EXTRA SPAN/BRACKET TAGS HATA DIYE GAYE HAIN -->
+          <ul class="details-list">
+            <li><i class="fa-solid fa-bolt"></i> 1200 DPI Optical Sensor</li>
+            <li><i class="fa-solid fa-palette"></i> Breathing RGB Lighting</li>
+            <li><i class="fa-solid fa-link"></i> Tangle-Free 1.35m PVC Cable</li>
+            <li><i class="fa-solid fa-feather"></i> 70g Lightweight Ergonomic Grip</li>
+          </ul>
+
+          <button class="btn-order" onclick="openOrderModal('GEONIX Vigor R7 Wired Gaming Mouse', 299)">
+            <i class="fa-solid fa-bolt"></i> Buy Now @ ₹299
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h3 id="itemModalTitle">Order Gaming Item</h3>
+          <p id="itemModalPrice" style="color: var(--green); font-weight: 700; font-size: 0.95rem; margin-top: 2px;"></p>
+        </div>
+        <span class="close-icon" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></span>
+      </div>
+
+      <div class="timer-banner">
+        <i class="fa-regular fa-clock"></i> Payment Closes in: <span id="timerDisplay" style="font-family: monospace; font-size: 1rem; margin-left: 4px;">10:00</span>
+      </div>
+
+      <div style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 6px;">Tap to Pay Directly:</div>
+      <div class="upi-buttons-grid">
+        <a href="javascript:void(0)" onclick="payViaApp('gpay')" class="upi-app-btn">
+          <i class="fa-brands fa-google-pay" style="font-size: 1.4rem; color: #4285F4;"></i> GPay
+        </a>
+        <a href="javascript:void(0)" onclick="payViaApp('phonepe')" class="upi-app-btn">
+          <i class="fa-solid fa-mobile-screen" style="font-size: 1.3rem; color: #9333ea;"></i> PhonePe
+        </a>
+        <a href="javascript:void(0)" onclick="payViaApp('paytm')" class="upi-app-btn">
+          <i class="fa-solid fa-wallet" style="font-size: 1.3rem; color: #00b9f1;"></i> Paytm
+        </a>
+      </div>
+
+      <div class="upi-manual-box">
+        <p>Direct UPI ID for all apps:</p>
+        <div class="upi-val">6201143946@axl</div>
+        <p style="font-size: 0.72rem; color: #64748b;">(Payment ke baad 12-digit UTR/Ref No. form me bharein)</p>
+      </div>
+
+      <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+        <div class="form-group">
+          <label>Aapka Poora Naam</label>
+          <input type="text" id="cName" placeholder="Full Name" required />
+        </div>
+        <div class="form-group">
+          <label>WhatsApp / Control Number</label>
+          <input type="tel" id="cPhone" placeholder="Mobile Number" required />
+        </div>
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <textarea id="cAddress" rows="2" placeholder="Ghar ka no, Street, Pincode" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>12-digit UPI / UTR Transaction Ref No.</label>
+          <input type="text" id="cUTR" placeholder="Enter UTR Reference No." required />
+        </div>
+
+        <button type="submit" id="orderSubmitBtn" class="btn-order" style="margin-top: 8px;">
+          <i class="fa-solid fa-check-circle"></i> Confirm & Submit Order
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+      <div class="success-icon-box">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h2>Payment Confirmed!</h2>
+      <p>Aapka order successfully place ho gaya hai aur owner dashboard par notify kar diya gaya hai.</p>
+      <button class="btn-order" onclick="closeSuccess()">Done</button>
+    </div>
+  </div>
+
+</body>
+      </html>
