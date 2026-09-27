@@ -52,7 +52,7 @@
     .price { color: var(--primary); font-size: 1.4rem; font-weight: 700; font-family: 'Rajdhani', sans-serif; }
     .mrp { text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem; }
 
-    .btn-action { background: transparent; color: var(--primary); border: 1px solid var(--primary); width: 100%; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; text-transform: uppercase; margin-bottom: 6px; font-size: 0.85rem; }
+    .btn-action { background: transparent; color: var(--primary); border: 1px solid var(--primary); width: 100%; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; text-transform: uppercase; margin-bottom: 6px; font-size: 0.85rem; transition: 0.2s; }
     .btn-action:hover { background: var(--primary); color: #000; }
     .btn-buy { background: var(--primary); color: #000; border: none; }
     .btn-digital { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; border: none; }
@@ -63,11 +63,11 @@
     .nav-item.active { color: var(--primary); }
 
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
-    .modal-box { background: var(--card-bg); border: 1px solid var(--primary); border-radius: 12px; width: 100%; max-width: 400px; padding: 20px; color: var(--text-main); max-height: 90vh; overflow-y: auto; text-align: center; }
+    .modal-box { background: var(--card-bg); border: 1px solid var(--primary); border-radius: 12px; width: 100%; max-width: 420px; padding: 20px; color: var(--text-main); max-height: 90vh; overflow-y: auto; text-align: center; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
     
-    input { width: 100%; background: #090c14; border: 1px solid var(--card-border); color: #fff; padding: 10px; border-radius: 8px; margin-bottom: 12px; outline: none; text-align: left; }
-    input:focus { border-color: var(--primary); }
+    input, textarea { width: 100%; background: #090c14; border: 1px solid var(--card-border); color: #fff; padding: 10px; border-radius: 8px; margin-bottom: 10px; outline: none; font-size: 0.85rem; }
+    input:focus, textarea:focus { border-color: var(--primary); }
 
     .profile-avatar { width: 60px; height: 60px; background: var(--primary); color: #000; font-size: 1.8rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: bold; }
     .profile-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--card-border); font-size: 0.9rem; }
@@ -75,8 +75,9 @@
     .pack-row { display: flex; justify-content: space-between; align-items: center; background: #090c14; border: 1px solid var(--card-border); padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; }
     .pack-row:hover { border-color: var(--primary); }
 
-    .qr-container { background: #fff; padding: 12px; border-radius: 10px; display: inline-block; margin: 12px 0; }
-    .qr-container img { width: 190px; height: 190px; display: block; }
+    .qr-container { background: #fff; padding: 10px; border-radius: 12px; display: inline-block; margin: 10px 0; box-shadow: 0 0 20px rgba(204, 230, 0, 0.2); }
+    .qr-container img { width: 210px; height: 210px; object-fit: contain; display: block; }
+    .upi-badge { background: #090c14; border: 1px dashed var(--primary); padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; color: var(--primary); margin-bottom: 10px; display: inline-block; }
   </style>
 
   <script type="module">
@@ -112,7 +113,7 @@
   </div>
 
   <div class="hero-banner">
-    <h1 id="userGreeting">Gaming Hub Under ₹500</h1>
+    <h1 id="userGreeting">GAmËRs Official Store</h1>
     <p>Scan & Pay Instant UPI Checkout</p>
   </div>
 
@@ -245,19 +246,32 @@
         <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeModal('paymentModal')"></i>
       </div>
       
-      <p style="font-size: 0.85rem; color: var(--text-muted);">Amount to Pay:</p>
-      <h2 id="payModalAmount" style="color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 2rem; margin: 4px 0 10px;">₹0</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Payable Amount:</p>
+      <h2 id="payModalAmount" style="color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 2rem; margin: 4px 0 6px;">₹0</h2>
+      
+      <div class="upi-badge">UPI ID: <strong>bgmiitoo@fam</strong></div>
       
       <div class="qr-container">
-        <img id="upiQrCodeImg" src="" alt="UPI QR Code" />
+        <!-- FamPay Scanner Image / Auto Dynamic QR -->
+        <img id="upiQrCodeImg" src="qr.jpg" onerror="fallbackQR(this)" alt="UPI QR Code" />
       </div>
 
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">Scan using any UPI App (GPay, PhonePe, Paytm)</p>
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">FamPay / GPay / PhonePe / Paytm se scan karein</p>
       
-      <a id="directUpiAppBtn" href="#" class="btn-action btn-buy" style="display: block; text-decoration: none; margin-bottom: 12px;">Open UPI App Directly</a>
+      <a id="directUpiAppBtn" href="#" class="btn-action btn-buy" style="display: block; text-decoration: none; margin-bottom: 14px;">⚡ Pay Directly in UPI App</a>
 
-      <input type="text" id="utrNumberInp" placeholder="Enter 12-digit UTR / Ref No." />
-      <button class="btn-action" style="border-color: #22c55e; color: #22c55e;" onclick="submitOrderConfirmation()">Confirm Payment</button>
+      <div style="text-align: left; background: #090c14; padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 10px;">
+        <label style="font-size:0.75rem; color:var(--text-muted);">Aapka Naam</label>
+        <input type="text" id="orderCustName" placeholder="Full Name" />
+        <label style="font-size:0.75rem; color:var(--text-muted);">Mobile Number</label>
+        <input type="tel" id="orderCustPhone" placeholder="Mobile Number" />
+        <label style="font-size:0.75rem; color:var(--text-muted);">Address / Delivery Details</label>
+        <input type="text" id="orderCustAddr" placeholder="Street, City, Pincode" />
+        <label style="font-size:0.75rem; color:var(--text-muted);">12-digit UPI / UTR Transaction ID</label>
+        <input type="text" id="utrNumberInp" placeholder="Enter UTR Reference No." />
+      </div>
+
+      <button id="submitPayBtn" class="btn-action" style="border-color: #22c55e; color: #22c55e; padding: 12px;" onclick="submitOrderConfirmation()">Confirm & Submit Order</button>
     </div>
   </div>
 
@@ -326,39 +340,4 @@
   </div>
 
   <script>
-    let cart = [];
-    const UPI_ID = "6201143946@axl";
-    let pendingOrder = null;
-
-    function getSavedUser() {
-      return JSON.parse(localStorage.getItem('gamer_profile')) || null;
-    }
-
-    function syncProfileUI() {
-      const u = getSavedUser();
-      if(u && u.name) {
-        document.getElementById('userGreeting').innerText = `Welcome, ${u.name}!`;
-        document.getElementById('navUserLabel').innerText = u.name.split(' ')[0];
-        document.getElementById('dispName').innerText = u.name;
-        document.getElementById('avatarInitial').innerText = u.name.charAt(0).toUpperCase();
-        document.getElementById('dispPhone').innerText = u.phone || '-';
-        document.getElementById('dispAddress').innerText = u.address || '-';
-      } else {
-        document.getElementById('userGreeting').innerText = "Gaming Hub Under ₹500";
-        document.getElementById('navUserLabel').innerText = "Profile";
-      }
-    }
-
-    function handleProfileNav() {
-      if(getSavedUser()) {
-        document.getElementById('profileModal').style.display = 'flex';
-      } else {
-        openEditProfile();
-      }
-    }
-
-    function openEditProfile() {
-      closeModal('profileModal');
-      const u = getSavedUser() || {};
-      document.getElementById('profInpName').value = u.name || '';
-      docume
+  
