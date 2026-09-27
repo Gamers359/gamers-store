@@ -10,151 +10,86 @@
 
   <style>
     :root {
-      --primary: #ff0055;
-      --primary-glow: rgba(255, 0, 85, 0.45);
-      --accent: #00f0ff;
-      --bg-dark: #0a0d16;
-      --card-bg: #131826;
-      --card-border: #1e263d;
+      --primary: #cce600; 
+      --primary-glow: rgba(204, 230, 0, 0.4);
+      --bg-dark: #000000;
+      --card-bg: #111111;
+      --card-border: #333333;
       --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --green: #22c55e;
+      --text-muted: #888888;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 50px; }
-
-    header {
-      background: linear-gradient(180deg, #161e33 0%, var(--bg-dark) 100%);
-      border-bottom: 1px solid var(--card-border);
-      padding: 18px 15px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(10px);
-    }
-    .brand-logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      color: #ffffff;
-      text-shadow: 0 0 12px var(--primary), 0 0 25px var(--primary-glow);
-    }
-    .brand-logo span { color: var(--accent); text-shadow: 0 0 14px var(--accent); }
-    .tagline { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1.2px; text-transform: uppercase; margin-top: 3px; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
-
-    .container { max-width: 1000px; margin: 25px auto 0; padding: 0 15px; }
-    .section-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; margin-bottom: 18px; color: #fff; display: flex; align-items: center; gap: 8px; }
-    .section-title i { color: var(--primary); }
-
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 360px)); gap: 25px; justify-content: center; }
-    .product-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
-      display: flex;
-      flex-direction: column;
+    body.light-mode {
+      --bg-dark: #f0f2f5;
+      --card-bg: #ffffff;
+      --card-border: #dddddd;
+      --text-main: #111111;
+      --text-muted: #555555;
     }
 
-    .badge-deal {
-      position: absolute; top: 12px; left: 12px;
-      background: linear-gradient(135deg, #ff0055, #d90429);
-      color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700;
-      font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; z-index: 5;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text-main); padding-top: 60px; padding-bottom: 70px; transition: 0.3s; }
 
-    .gallery-container {
-      background: radial-gradient(circle at center, #1b243b 0%, #0d1220 100%);
-      width: 100%;
-      border-bottom: 1px solid var(--card-border);
-      padding: 16px;
-      text-align: center;
-    }
+    .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 60px; background: var(--card-bg); border-bottom: 1px solid var(--primary-glow); display: flex; justify-content: space-between; align-items: center; padding: 0 15px; z-index: 100; transition: 0.3s; }
+    .brand-logo { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--text-main); letter-spacing: 1px; }
+    .brand-logo span { color: var(--primary); }
+    .top-icons { display: flex; gap: 18px; align-items: center; }
+    .top-icons i { color: var(--primary); font-size: 1.3rem; cursor: pointer; }
+    
+    .cart-wrapper { position: relative; }
+    .cart-badge { position: absolute; top: -6px; right: -8px; background: red; color: white; font-size: 0.65rem; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-    .main-img-box {
-      width: 100%;
-      height: 230px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .hero-banner { text-align: center; padding: 30px 15px; border-bottom: 1px solid var(--card-border); }
+    .hero-banner h1 { font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; color: var(--text-main); font-weight: 700; }
 
-    .main-img-box img {
-      max-height: 100%;
-      max-width: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.7));
-    }
+    .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
 
-    .mouse-vector-art {
-      width: 170px;
-      height: 220px;
-      display: none;
-      filter: drop-shadow(0 0 15px rgba(255, 0, 85, 0.5));
-    }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .product-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; transition: 0.3s; position: relative;}
+    
+    .badge-deal { position: absolute; top: 12px; left: 12px; background: linear-gradient(135deg, #ff0055, #d90429); color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; z-index: 5; }
 
-    .card-content { padding: 20px; display: flex; flex-direction: column; flex: 1; }
-    .item-category { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
-    .item-title { font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 10px; line-height: 1.35; }
+    .product-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 15px; border-radius: 8px; }
+    .item-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+    .item-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.4; }
+    
+    .price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+    .price { color: var(--primary); font-size: 1.5rem; font-weight: 700; font-family: 'Rajdhani', sans-serif; }
 
-    .rating-row { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-size: 0.82rem; color: var(--text-muted); }
-    .stars { color: #f59e0b; }
+    .btn-action { background: transparent; color: var(--primary); border: 1px solid var(--primary); width: 100%; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; text-transform: uppercase; margin-bottom: 8px; }
+    .btn-action:hover { background: var(--primary); color: #000; }
+    .btn-buy { background: var(--primary); color: #000; }
 
-    .price-container { background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 14px; margin-bottom: 15px; }
-    .price-main { display: flex; align-items: baseline; gap: 10px; }
-    .current-price { font-family: 'Rajdhani', sans-serif; font-size: 1.9rem; font-weight: 700; color: var(--green); line-height: 1; }
-    .mrp-price { font-size: 0.92rem; text-decoration: line-through; color: var(--text-muted); }
-    .discount-tag { background: rgba(34,197,94,0.15); color: var(--green); font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card-bg); border-top: 1px solid var(--primary-glow); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; transition: 0.3s; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.7rem; cursor: pointer; }
+    .nav-item i { font-size: 1.2rem; }
+    .nav-item.active { color: var(--primary); }
 
-    .details-list { list-style: none; margin-bottom: 18px; flex: 1; }
-    .details-list li { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 9px; display: flex; align-items: center; gap: 10px; }
-    .details-list li i { color: var(--accent); font-size: 0.85rem; width: 16px; text-align: center; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
+    .modal-box { background: var(--card-bg); border: 1px solid var(--primary); border-radius: 12px; width: 100%; max-width: 400px; padding: 20px; color: var(--text-main); max-height: 90vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
+    
+    input { width: 100%; background: var(--bg-dark); border: 1px solid var(--card-border); color: var(--text-main); padding: 12px; border-radius: 8px; margin-bottom: 15px; outline: none; }
+    input:focus { border-color: var(--primary); }
 
-    .btn-order {
-      background: linear-gradient(135deg, var(--primary) 0%, #d90429 100%);
-      color: #fff; border: none; width: 100%; padding: 13px; border-radius: 10px;
-      font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 4px 15px rgba(255, 0, 85, 0.35); transition: 0.2s;
-    }
-    .btn-order:hover { filter: brightness(1.15); transform: scale(1.02); }
-
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(5,7,13,0.85); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 1000; padding: 15px; }
-    .modal-box { background: #141a2b; border: 1px solid var(--card-border); border-radius: 14px; width: 100%; max-width: 440px; padding: 22px; max-height: 90vh; overflow-y: auto; }
-    .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
-    .modal-header h3 { font-size: 1.1rem; color: #fff; }
-    .close-icon { color: var(--text-muted); font-size: 1.3rem; cursor: pointer; }
-
-    .timer-banner { background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 8px; padding: 8px 12px; text-align: center; margin-bottom: 14px; color: #f87171; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: center; align-items: center; gap: 6px; }
-
-    .upi-buttons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
-    .upi-app-btn { background: #0a0d17; border: 1px solid var(--card-border); padding: 9px 5px; border-radius: 8px; text-align: center; color: #fff; font-size: 0.78rem; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; }
-    .upi-app-btn:hover { border-color: var(--accent); background: #19233a; }
-
-    .upi-manual-box { background: #0d1220; border: 1px dashed var(--accent); border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 14px; }
-    .upi-manual-box p { font-size: 0.78rem; color: var(--text-muted); }
-    .upi-val { font-size: 1rem; font-weight: 700; color: var(--accent); margin: 3px 0; user-select: all; }
-
-    .form-group { margin-bottom: 10px; }
-    .form-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
-    input, textarea { width: 100%; background: #0a0d17; border: 1px solid var(--card-border); color: #fff; padding: 9px 11px; border-radius: 8px; font-size: 0.85rem; outline: none; }
-    input:focus, textarea:focus { border-color: var(--accent); }
-
-    .success-overlay { display: none; position: fixed; inset: 0; background: rgba(5,7,13,0.92); z-index: 2000; justify-content: center; align-items: center; text-align: center; padding: 20px; }
-    .success-card { background: #141a2b; border: 1px solid var(--green); padding: 30px 25px; border-radius: 18px; max-width: 380px; width: 100%; box-shadow: 0 0 35px rgba(34,197,94,0.3); }
-    .success-icon-box { width: 75px; height: 75px; background: rgba(34,197,94,0.15); color: var(--green); font-size: 2.2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 2px solid var(--green); }
-    .success-card h2 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; font-family: 'Rajdhani', sans-serif; font-weight: 700; }
-    .success-card p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+    .profile-info { text-align: center; margin-bottom: 20px; }
+    .avatar { width: 70px; height: 70px; background: var(--primary); color: #000; font-size: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: bold; }
+    .menu-btn { display: flex; align-items: center; justify-content: space-between; background: var(--bg-dark); padding: 15px; border-radius: 8px; margin-bottom: 10px; cursor: pointer; border: 1px solid var(--card-border); }
+    
+    .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; border-radius: 20px; transition: .4s; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .4s; }
+    input:checked + .slider { background-color: var(--primary); }
+    input:checked + .slider:before { transform: translateX(20px); background-color: #000; }
+    
+    .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid var(--card-border); padding: 10px 0; font-size: 0.9rem; }
   </style>
 
+  <!-- FIREBASE AUTH & FIRESTORE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -168,243 +103,336 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const auth = getAuth(app);
+    window.db = getFirestore(app);
 
-    let activeItem = "GEONIX Vigor R7 Wired Gaming Mouse";
-    let activePrice = 299;
-    let timerInterval = null;
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      'size': 'invisible'
+    });
 
-    window.handleImgError = () => {
-      document.getElementById('mainProductImg').style.display = "none";
-      document.getElementById('vectorMouse').style.display = "block";
-    };
-
-    window.openOrderModal = (name, price) => {
-      activeItem = name;
-      activePrice = price;
-      document.getElementById('itemModalTitle').innerText = name;
-      document.getElementById('itemModalPrice').innerText = `Payable: ₹${price}`;
-      document.getElementById('checkoutModal').style.display = 'flex';
-      startCountdown(10 * 60);
-    };
-
-    window.closeOrderModal = () => {
-      document.getElementById('checkoutModal').style.display = 'none';
-      if(timerInterval) clearInterval(timerInterval);
-    };
-
-    function startCountdown(duration) {
-      let timer = duration, minutes, seconds;
-      const display = document.getElementById('timerDisplay');
-      if(timerInterval) clearInterval(timerInterval);
-
-      timerInterval = setInterval(() => {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = `${minutes}:${seconds}`;
-
-        if (--timer < 0) {
-          clearInterval(timerInterval);
-          display.textContent = "Time Expired";
-        }
-      }, 1000);
-    }
-
-    window.payViaApp = (appName) => {
-      const upiId = "6201143946@axl";
-      const name = "GAmERs Store";
-      const amt = activePrice;
-      let url = "";
-
-      if(appName === 'gpay') {
-        url = `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
-      } else if(appName === 'phonepe') {
-        url = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
-      } else if(appName === 'paytm') {
-        url = `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.currentUser = user;
+        document.getElementById('navAccountText').innerText = "Profile";
+        document.getElementById('userGreeting').innerText = `Welcome, ${user.displayName || 'User'}!`;
       } else {
-        url = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
+        window.currentUser = null;
+        document.getElementById('navAccountText').innerText = "Login";
+        document.getElementById('userGreeting').innerText = "Shop Your Favorites";
       }
+    });
 
-      window.location.href = url;
-    };
-
-    window.handleOrderSubmit = async (e) => {
-      e.preventDefault();
-      const submitBtn = document.getElementById('orderSubmitBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting...';
-
-      const custName = document.getElementById('cName').value;
-      const custPhone = document.getElementById('cPhone').value;
-      const custAddress = document.getElementById('cAddress').value;
-      const custUTR = document.getElementById('cUTR').value;
-
-      try {
-        await addDoc(collection(db, "orders"), {
-          item: activeItem,
-          price: activePrice,
-          customerName: custName,
-          phoneOrControl: custPhone,
-          address: custAddress,
-          utrNumber: custUTR,
-          status: "Order Received",
-          orderDate: serverTimestamp()
+    window.sendOTP = () => {
+      const phone = "+91" + document.getElementById('loginPhone').value;
+      const btn = document.getElementById('otpBtn');
+      if(phone.length < 13) return alert("Sahi 10-digit mobile number daalein.");
+      
+      btn.innerText = "Sending OTP...";
+      signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          document.getElementById('phoneDiv').style.display = 'none';
+          document.getElementById('otpDiv').style.display = 'block';
+        }).catch((error) => {
+          alert("Error! Kripya Firebase Console me 'Phone Auth' enable karein.");
+          btn.innerText = "Get OTP";
         });
-
-        closeOrderModal();
-        document.getElementById('orderForm').reset();
-        document.getElementById('successOverlay').style.display = 'flex';
-      } catch (err) {
-        alert("Firestore Error! Kripya Firestore Database connect karein.");
-        console.error(err);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Confirm & Submit Order';
-      }
     };
 
-    window.closeSuccess = () => {
-      document.getElementById('successOverlay').style.display = 'none';
+    window.verifyOTP = () => {
+      const code = document.getElementById('loginOTP').value;
+      const name = document.getElementById('loginName').value;
+      
+      if(!name) return alert("Pehle apna naam bharein.");
+      if(!code) return alert("OTP bharein.");
+
+      window.confirmationResult.confirm(code).then((result) => {
+        const user = result.user;
+        updateProfile(user, { displayName: name }).then(() => {
+          alert("Login Successful!");
+          closeModal('authModal');
+          document.getElementById('userGreeting').innerText = `Welcome, ${name}!`;
+        });
+      }).catch((error) => {
+        alert("Galat OTP!");
+      });
+    };
+
+    window.logout = () => {
+      signOut(auth).then(() => {
+        alert("Logged out successfully.");
+        closeModal('profileModal');
+      });
     };
   </script>
 </head>
 <body>
 
-  <header>
+  <!-- TOP BAR -->
+  <div class="top-bar">
     <div class="brand-logo">GAm<span>ËRs</span></div>
-    <div class="tagline">Official Gaming Gears & Reselling Hub</div>
-  </header>
-
-  <main class="container">
-    <div class="section-title">
-      <i class="fa-solid fa-fire"></i> Featured Gaming Deals
+    <div class="top-icons">
+      <i class="fa-regular fa-heart"></i>
+      <div class="cart-wrapper" onclick="openCart()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </div>
     </div>
+  </div>
 
+  <!-- BANNER -->
+  <div class="hero-banner">
+    <h1 id="userGreeting">Shop Your Favorites</h1>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="container">
     <div class="product-grid">
+      
+      <!-- ITEM 1: GEONIX Mouse -->
       <div class="product-card">
         <span class="badge-deal">50% OFF</span>
-        
-        <div class="gallery-container">
-          <div class="main-img-box">
-            <img id="mainProductImg" referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=600&q=80" onerror="handleImgError()" alt="GEONIX Vigor R7 Gaming Mouse" />
-            
-            <svg id="vectorMouse" class="mouse-vector-art" viewBox="0 0 100 130">
-              <path d="M 50 5 C 25 5 15 35 15 70 C 15 105 30 125 50 125 C 70 125 85 105 85 70 C 85 35 75 5 50 5 Z" fill="#151b2b" stroke="#ff0055" stroke-width="2"/>
-              <path d="M 50 8 L 50 50" stroke="#ff0055" stroke-width="2"/>
-              <rect x="47" y="20" width="6" height="15" rx="3" fill="#00f0ff"/>
-              <path d="M 28 35 Q 38 60 28 85" stroke="#ff0055" stroke-width="2.5" fill="none"/>
-              <path d="M 72 35 Q 62 60 72 85" stroke="#ff0055" stroke-width="2.5" fill="none"/>
-              <text x="50" y="105" text-anchor="middle" fill="#00f0ff" font-size="7" font-family="'Orbitron', sans-serif">GEONIX R7</text>
-            </svg>
-          </div>
+        <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=400&q=80" class="product-img" alt="Geonix Mouse">
+        <div class="item-title">GEONIX Vigor R7 Wired Mouse</div>
+        <p class="item-desc">1200 DPI Optical Sensor | Breathing RGB | Anti-Slip Grip</p>
+        <div class="price-row">
+          <span class="price">₹299</span>
+          <span style="text-decoration:line-through; color:var(--text-muted);">₹599</span>
         </div>
-
-        <div class="card-content">
-          <div class="item-category">Gaming Peripherals</div>
-          <h2 class="item-title">GEONIX Vigor R7 Wired Gaming Mouse</h2>
-
-          <div class="rating-row">
-            <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span>
-            <span>4.3 (1,240+ Reviews)</span>
-          </div>
-
-          <div class="price-container">
-            <div class="price-main">
-              <span class="current-price">₹299</span>
-              <span class="mrp-price">M.R.P: ₹599</span>
-              <span class="discount-tag">Save ₹300</span>
-            </div>
-          </div>
-
-          <!-- YAHAN SE SABHI EXTRA SPAN/BRACKET TAGS HATA DIYE GAYE HAIN -->
-          <ul class="details-list">
-            <li><i class="fa-solid fa-bolt"></i> 1200 DPI Optical Sensor</li>
-            <li><i class="fa-solid fa-palette"></i> Breathing RGB Lighting</li>
-            <li><i class="fa-solid fa-link"></i> Tangle-Free 1.35m PVC Cable</li>
-            <li><i class="fa-solid fa-feather"></i> 70g Lightweight Ergonomic Grip</li>
-          </ul>
-
-          <button class="btn-order" onclick="openOrderModal('GEONIX Vigor R7 Wired Gaming Mouse', 299)">
-            <i class="fa-solid fa-bolt"></i> Buy Now @ ₹299
-          </button>
-        </div>
+        <button class="btn-action" onclick="addToCart('GEONIX Mouse', 299)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+        <button class="btn-action btn-buy" onclick="buyNow('GEONIX Vigor R7 Wired Mouse', 299)">Buy Now</button>
       </div>
-    </div>
-  </main>
 
-  <div class="modal-overlay" id="checkoutModal">
+      <!-- ITEM 2: MEHTO Finger Sleeves -->
+      <div class="product-card">
+        <span class="badge-deal">87% OFF</span>
+        <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=400&q=80" class="product-img" alt="Finger Sleeves">
+        <div class="item-title">MEHTO Gaming Finger Sleeves</div>
+        <p class="item-desc">Smoother Control | Breathable Fabric | Washable & Reusable (3 Pairs, Black)</p>
+        <div class="price-row">
+          <span class="price">₹129</span>
+          <span style="text-decoration:line-through; color:var(--text-muted);">₹999</span>
+        </div>
+        <button class="btn-action" onclick="addToCart('MEHTO Finger Sleeves', 129)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+        <button class="btn-action btn-buy" onclick="buyNow('MEHTO Finger Sleeves', 129)">Buy Now</button>
+      </div>
+
+      <!-- ITEM 3: Durex Extra Time -->
+      <div class="product-card">
+        <span class="badge-deal">41% OFF</span>
+        <img src="https://images.unsplash.com/photo-1518115599873-19bd6ce4924c?auto=format&fit=crop&w=400&q=80" class="product-img" alt="Durex Extra Time">
+        <div class="item-title">Durex Extra Time (10 Condoms)</div>
+        <p class="item-desc">Ultra Thin | Heightened Sensations | Extended Pleasure | World's No.1 Brand</p>
+        <div class="price-row">
+          <span class="price">₹352</span>
+          <span style="text-decoration:line-through; color:var(--text-muted);">₹599</span>
+        </div>
+        <button class="btn-action" onclick="addToCart('Durex Extra Time', 352)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+        <button class="btn-action btn-buy" onclick="buyNow('Durex Extra Time', 352)">Buy Now</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="bottom-nav">
+    <a href="#" class="nav-item active"><i class="fa-solid fa-gamepad"></i><span>Games</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-border-all"></i><span>Categories</span></a>
+    <a href="#" class="nav-item" onclick="openAccount()"><i class="fa-regular fa-user"></i><span id="navAccountText">Login</span></a>
+  </div>
+
+  <!-- OTP LOGIN MODAL -->
+  <div class="modal-overlay" id="authModal">
     <div class="modal-box">
       <div class="modal-header">
-        <div>
-          <h3 id="itemModalTitle">Order Gaming Item</h3>
-          <p id="itemModalPrice" style="color: var(--green); font-weight: 700; font-size: 0.95rem; margin-top: 2px;"></p>
-        </div>
-        <span class="close-icon" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></span>
+        <h3>Login with Phone</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeModal('authModal')"></i>
       </div>
-
-      <div class="timer-banner">
-        <i class="fa-regular fa-clock"></i> Payment Closes in: <span id="timerDisplay" style="font-family: monospace; font-size: 1rem; margin-left: 4px;">10:00</span>
+      <div id="recaptcha-container"></div>
+      <div id="phoneDiv">
+        <label style="font-size:0.8rem; color:var(--text-muted);">Aapka Naam</label>
+        <input type="text" id="loginName" placeholder="Enter Full Name" />
+        <label style="font-size:0.8rem; color:var(--text-muted);">Mobile Number</label>
+        <input type="tel" id="loginPhone" placeholder="9876543210" />
+        <button id="otpBtn" class="btn-action btn-buy" onclick="sendOTP()">Get OTP via SMS</button>
       </div>
-
-      <div style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 6px;">Tap to Pay Directly:</div>
-      <div class="upi-buttons-grid">
-        <a href="javascript:void(0)" onclick="payViaApp('gpay')" class="upi-app-btn">
-          <i class="fa-brands fa-google-pay" style="font-size: 1.4rem; color: #4285F4;"></i> GPay
-        </a>
-        <a href="javascript:void(0)" onclick="payViaApp('phonepe')" class="upi-app-btn">
-          <i class="fa-solid fa-mobile-screen" style="font-size: 1.3rem; color: #9333ea;"></i> PhonePe
-        </a>
-        <a href="javascript:void(0)" onclick="payViaApp('paytm')" class="upi-app-btn">
-          <i class="fa-solid fa-wallet" style="font-size: 1.3rem; color: #00b9f1;"></i> Paytm
-        </a>
+      <div id="otpDiv" style="display:none;">
+        <label style="font-size:0.8rem; color:var(--text-muted);">Enter 6-digit OTP</label>
+        <input type="number" id="loginOTP" placeholder="******" />
+        <button class="btn-action btn-buy" onclick="verifyOTP()">Verify & Login</button>
       </div>
-
-      <div class="upi-manual-box">
-        <p>Direct UPI ID for all apps:</p>
-        <div class="upi-val">6201143946@axl</div>
-        <p style="font-size: 0.72rem; color: #64748b;">(Payment ke baad 12-digit UTR/Ref No. form me bharein)</p>
-      </div>
-
-      <form id="orderForm" onsubmit="handleOrderSubmit(event)">
-        <div class="form-group">
-          <label>Aapka Poora Naam</label>
-          <input type="text" id="cName" placeholder="Full Name" required />
-        </div>
-        <div class="form-group">
-          <label>WhatsApp / Control Number</label>
-          <input type="tel" id="cPhone" placeholder="Mobile Number" required />
-        </div>
-        <div class="form-group">
-          <label>Delivery Address</label>
-          <textarea id="cAddress" rows="2" placeholder="Ghar ka no, Street, Pincode" required></textarea>
-        </div>
-        <div class="form-group">
-          <label>12-digit UPI / UTR Transaction Ref No.</label>
-          <input type="text" id="cUTR" placeholder="Enter UTR Reference No." required />
-        </div>
-
-        <button type="submit" id="orderSubmitBtn" class="btn-order" style="margin-top: 8px;">
-          <i class="fa-solid fa-check-circle"></i> Confirm & Submit Order
-        </button>
-      </form>
     </div>
   </div>
 
-  <div class="success-overlay" id="successOverlay">
-    <div class="success-card">
-      <div class="success-icon-box">
-        <i class="fa-solid fa-check"></i>
+  <!-- USER PROFILE MODAL -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>My Account</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeModal('profileModal')"></i>
       </div>
-      <h2>Payment Confirmed!</h2>
-      <p>Aapka order successfully place ho gaya hai aur owner dashboard par notify kar diya gaya hai.</p>
-      <button class="btn-order" onclick="closeSuccess()">Done</button>
+      <div class="profile-info">
+        <div class="avatar" id="profAvatar">U</div>
+        <h2 id="profName">User</h2>
+        <p style="color:var(--text-muted); font-size:0.85rem;" id="profPhone">+91XXXXXXXXXX</p>
+      </div>
+      <div class="menu-btn" onclick="openSettings()">
+        <span><i class="fa-solid fa-gear"></i> App Settings</span>
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+      <div class="menu-btn">
+        <span><i class="fa-solid fa-box"></i> My Orders</span>
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+      <button class="btn-action" style="color:#ff4444; border-color:#ff4444; margin-top:20px;" onclick="logout()">Logout</button>
     </div>
   </div>
 
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-arrow-left" style="cursor:pointer; margin-right:10px;" onclick="backToProfile()"></i> Settings</h3>
+      </div>
+      <div class="menu-btn" style="cursor:default;">
+        <span><i class="fa-solid fa-moon"></i> Dark Mode</span>
+        <label class="switch">
+          <input type="checkbox" id="themeToggle" checked onchange="toggleTheme()">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART MODAL -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Your Cart</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeModal('cartModal')"></i>
+      </div>
+      <div id="cartItemsList" style="margin-bottom: 15px; max-height: 200px; overflow-y: auto;">
+        <!-- Items -->
+      </div>
+      <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem; border-top:1px solid var(--card-border); padding-top:10px; margin-bottom:15px;">
+        <span>Total:</span>
+        <span style="color:var(--primary);">₹<span id="cartTotal">0</span></span>
+      </div>
+      <button class="btn-action btn-buy" onclick="checkoutCart()">Proceed to Checkout (UPI)</button>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+
+    function openAccount() {
+      if(window.currentUser) {
+        document.getElementById('profName').innerText = window.currentUser.displayName || "User";
+        document.getElementById('profAvatar').innerText = (window.currentUser.displayName || "U").charAt(0).toUpperCase();
+        document.getElementById('profPhone').innerText = window.currentUser.phoneNumber;
+        document.getElementById('profileModal').style.display = 'flex';
+      } else {
+        document.getElementById('authModal').style.display = 'flex';
+      }
+    }
+
+    function openSettings() {
+      closeModal('profileModal');
+      document.getElementById('settingsModal').style.display = 'flex';
+    }
+
+    function backToProfile() {
+      closeModal('settingsModal');
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function toggleTheme() {
+      const isDark = document.getElementById('themeToggle').checked;
+      if(!isDark) {
+        document.body.classList.add('light-mode');
+      } else {
+        document.body.classList.remove('light-mode');
+      }
+    }
+
+    // Cart System
+    function addToCart(item, price) {
+      cart.push({item, price});
+      updateCartUI();
+      // Chhota animation effect
+      const badge = document.getElementById('cartCount');
+      badge.style.transform = "scale(1.5)";
+      setTimeout(() => badge.style.transform = "scale(1)", 200);
+    }
+
+    function updateCartUI() {
+      document.getElementById('cartCount').innerText = cart.length;
+      let html = "";
+      let total = 0;
+      cart.forEach((c, index) => {
+        html += `<div class="cart-item"><span>${c.item}</span> <span>₹${c.price}</span></div>`;
+        total += c.price;
+      });
+      if(cart.length === 0) html = "<p style='color:var(--text-muted); text-align:center;'>Cart is empty.</p>";
+      document.getElementById('cartItemsList').innerHTML = html;
+      document.getElementById('cartTotal').innerText = total;
+    }
+
+    function openCart() {
+      updateCartUI();
+      document.getElementById('cartModal').style.display = 'flex';
+    }
+
+    // Direct Buy / Checkout Process
+    function buyNow(itemName, itemPrice) {
+      if(!window.currentUser) {
+        alert("Please Login to place an order.");
+        return openAccount();
+      }
+      processPayment(itemPrice, itemName);
+    }
+
+    function checkoutCart() {
+      if(cart.length === 0) return alert("Your cart is empty!");
+      if(!window.currentUser) {
+        alert("Please Login to place an order.");
+        closeModal('cartModal');
+        return openAccount();
+      }
+      const total = document.getElementById('cartTotal').innerText;
+      processPayment(total, "Cart Checkout");
+    }
+
+    function processPayment(amt, itemName) {
+      const upiId = "6201143946@axl";
+      const name = "GAmERs Store";
+      const url = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amt}&cu=INR`;
+      
+      // Save temp order to Firebase before redirecting
+      import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js").then((firestore) => {
+        firestore.addDoc(firestore.collection(window.db, "orders"), {
+          item: itemName,
+          price: amt,
+          customerName: window.currentUser.displayName,
+          phone: window.currentUser.phoneNumber,
+          status: "Payment Pending",
+          orderDate: firestore.serverTimestamp()
+        }).then(() => {
+          // Open UPI App
+          window.location.href = url;
+          setTimeout(() => {
+            alert(`Your order for ₹${amt} is initiated. We'll verify the payment shortly!`);
+            cart = [];
+            updateCartUI();
+            closeModal('cartModal');
+          }, 3000);
+        });
+      });
+    }
+  </script>
 </body>
-      </html>
+</html>
